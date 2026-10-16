@@ -1,6 +1,5 @@
 # VoltzRenderer
 GUI-less Rendering for Blender
--Currently Needs Installation of sv-ttk
 
 First Alpha Release of Voltz Renderer.
 
