@@ -1,8 +1,15 @@
 from tkinter import *
 from tkinter import filedialog,ttk,PhotoImage
-import sv_ttk
-import Render
-import time
+import os
+import settings
+import render
+
+try:
+    import sv_ttk
+except ModuleNotFoundError:
+    sv_ttk = None
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 window = Tk()
 window.resizable(False, False)
@@ -10,45 +17,69 @@ window.configure(bg="#1c0036")
 window.title('Voltz Renderer')
 window.geometry("1280x720")
 
-app_icon = PhotoImage(file="icon.png")
+ICON_PATH = os.path.join(SCRIPT_DIR, "icon.png")
+app_icon = PhotoImage(file=ICON_PATH)
 window.iconphoto(True, app_icon)
 
-# Set window size
-style = ttk.Style(window)
-style.theme_use('xpnative')
-
-
 #Functions
-def browseExec():
+def configuration():
+    config = settings.load()
     global blenderexec
-    blenderexec = filedialog.askopenfilename(initialdir = "/", title = "Select a File", filetypes = (("Blender", "*.exe*"), ("Blender", "*.exe*")))
-    label_file_explorer.configure(text="Blender Executable: "+blenderexec)
-def browseFile():
-    global blenderfile
-    blenderfile = filedialog.askopenfilename(initialdir = "/", title = "Select a File", filetypes = (("Blender files", "*.blend*"), ("Blender files", "*.blend*")))
-    label_file_explorer.configure(text="File Opened: "+blenderfile)
-def outputFolder():
+    blenderexec = config[0]
     global outputfile
+    outputfile = config[1]
+
+configuration()
+
+def browseExec():
+    blenderexec = filedialog.askopenfilename(initialdir = "/", title = "Select a File", filetypes = (("Blender", "*.exe*"), ("Blender", "*.exe*")))
+    if blenderexec!=None:
+        label_file_explorer.configure(text="Blender Executable: "+blenderexec)
+        settings.save(blenderexec, outputfile)
+        configuration()
+def browseFile():
+    global blenderfile 
+    blenderfile = filedialog.askopenfilename(initialdir = "/", title = "Select a File", filetypes = (("Blender files", "*.blend*"), ("Blender files", "*.blend*")))
+    if blenderfile!=None:
+        label_file_explorer.configure(text="File Opened: "+blenderfile)
+def outputFolder():
     outputfile = filedialog.askdirectory(title="Select a Folder", initialdir="/")
-    label_file_explorer.configure(text="File Opened: "+outputfile)
+    if outputfile!=None:
+        label_file_explorer.configure(text="File Opened: "+outputfile)
+        settings.save(blenderexec, outputfile)
+        configuration()
 def image():
-    label_file_explorer.configure(text="RENDERING IMAGE...")
-    label_file_explorer.configure(text=Render.renderimage('"'+blenderexec+'"', '"'+blenderfile+'"', text_frames.get("1.0", "end-1c"), '"'+outputfile+'/"'))
+    label_file_explorer.configure(text="Rendering Image...")
+    window.update()
+    file = os.path.splitext(os.path.basename(blenderfile))
+    label_file_explorer.configure(text=render.renderimage('"'+blenderexec+'"', '"'+blenderfile+'"', text_frames.get("1.0", "end-1c"), '"'+outputfile+f'/{file[0]}"'))
 def anim():
-    label_file_explorer.configure(text="RENDERING ANIMATION...")
-    label_file_explorer.configure(text=Render.renderanim('"'+blenderexec+'"', '"'+blenderfile+'"', '"'+outputfile+'/"', "OPTIX"))
+    label_file_explorer.configure(text="Rendering Animation...")
+    window.update()
+    file = os.path.splitext(os.path.basename(blenderfile))
+    label_file_explorer.configure(text=render.renderanim('"'+blenderexec+'"', '"'+blenderfile+'"', '"'+outputfile+f'/{file[0]}"', "OPTIX"))
+def center_window(window):
+    window.update_idletasks()
+    width = window.winfo_width()
+    height = window.winfo_height()
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    x = (screen_width - width) // 2
+    y = (screen_height - height) // 2
+    window.geometry(f"{width}x{height}+{x}+{y}")
 
 
 #Main Page
-label_file_explorer = Label(window, text = "Voltz Renderer v.0.1a", height=4, fg = "#ff006a", bg = "#0b0014", font=("System", 36))
-button_blender = ttk.Button(window,text = "Select Blender Executable", width=20, command = browseExec)
-button_explore = ttk.Button(window,text = "Select Blender File", width=20, command = browseFile)
-button_output = ttk.Button(window,text = "Select Output Folder", width=20, command = outputFolder)
-label_frames =  Label(window,text = "Frame:")
+buttonwidth = 35
+label_file_explorer = Label(window, text = "Voltz Renderer v.0.2a", height=4, fg = "#ff006a", bg = "#0b0014", font=("System", 36))
+button_blender = ttk.Button(window,text = "Select Blender Executable", width=buttonwidth, command = browseExec)
+button_explore = ttk.Button(window,text = "Select Blender File", width=buttonwidth, command = browseFile)
+button_output = ttk.Button(window,text = "Select Output Folder", width=buttonwidth, command = outputFolder)
+label_frames =  Label(window,text = "Frame:",width=buttonwidth)
 text_frames = Text(window, height = 1, width = 25)
 text_frames.insert(END, "1")
-button_renderImage = ttk.Button(window,text = "Render Image", width=20, command = lambda:image())  
-button_renderAnimation = ttk.Button(window,text = "Render Animation", width=20, command = lambda:anim())  
+button_renderImage = ttk.Button(window,text = "Render Image", width=buttonwidth, command = lambda:image())  
+button_renderAnimation = ttk.Button(window,text = "Render Animation", width=buttonwidth, command = lambda:anim())  
 button_exit = ttk.Button(window,text = "Exit",command = exit) 
 
 #Layout
@@ -69,7 +100,13 @@ button_renderAnimation.grid(column = 0, row = 10)
 window.grid_rowconfigure(10, minsize=50)
 button_exit.grid(column = 0, row = 11)
 window.grid_rowconfigure(11, minsize=50)
-sv_ttk.set_theme("dark")
 
+if sv_ttk:
+    sv_ttk.set_theme("dark")
+else:
+    print("sv_ttk package not installed!")
+    style = ttk.Style(window)
+    style.theme_use('classic')
+center_window(window)
 
 window.mainloop()
