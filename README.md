@@ -1,4 +1,4 @@
-# Voltz Renderer
+#  <img src="icon.png" height="25px"> Voltz Renderer
 **GUI-less Rendering for Blender**, 0.21 Alpha Release of Voltz Renderer.
 
 _Does Have_
