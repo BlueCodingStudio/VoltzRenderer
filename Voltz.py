@@ -1,13 +1,8 @@
 from tkinter import *
-from tkinter import filedialog,ttk,PhotoImage
+from tkinter import filedialog,ttk
 import os
 import settings
 import render
-
-try:
-    import sv_ttk
-except ModuleNotFoundError:
-    sv_ttk = None
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -33,18 +28,18 @@ configuration()
 
 def browseExec():
     blenderexec = filedialog.askopenfilename(initialdir = "/", title = "Select a File", filetypes = (("Blender", "*.exe*"), ("Blender", "*.exe*")))
-    if blenderexec!=None:
+    if blenderexec!="":
         label_file_explorer.configure(text="Blender Executable: "+blenderexec)
         settings.save(blenderexec, outputfile)
         configuration()
 def browseFile():
     global blenderfile 
     blenderfile = filedialog.askopenfilename(initialdir = "/", title = "Select a File", filetypes = (("Blender files", "*.blend*"), ("Blender files", "*.blend*")))
-    if blenderfile!=None:
+    if blenderfile!="":
         label_file_explorer.configure(text="File Opened: "+blenderfile)
 def outputFolder():
     outputfile = filedialog.askdirectory(title="Select a Folder", initialdir="/")
-    if outputfile!=None:
+    if outputfile!="":
         label_file_explorer.configure(text="File Opened: "+outputfile)
         settings.save(blenderexec, outputfile)
         configuration()
@@ -71,16 +66,16 @@ def center_window(window):
 
 #Main Page
 buttonwidth = 35
-label_file_explorer = Label(window, text = "Voltz Renderer v.0.2a", height=4, fg = "#ff006a", bg = "#0b0014", font=("System", 36))
+label_file_explorer = Label(window, text = "Voltz Renderer v.0.21a", height=4, fg = "#ff006a", bg = "#0b0014", font=("System", 36))
 button_blender = ttk.Button(window,text = "Select Blender Executable", width=buttonwidth, command = browseExec)
 button_explore = ttk.Button(window,text = "Select Blender File", width=buttonwidth, command = browseFile)
 button_output = ttk.Button(window,text = "Select Output Folder", width=buttonwidth, command = outputFolder)
-label_frames =  Label(window,text = "Frame:",width=buttonwidth)
-text_frames = Text(window, height = 1, width = 25)
+label_frames =  ttk.Label(window,text = "Frame:")
+text_frames = Text(window, height = 1, width = 25, font=("System", 24), background="#1c0036", foreground="#E0E0E0")
 text_frames.insert(END, "1")
 button_renderImage = ttk.Button(window,text = "Render Image", width=buttonwidth, command = lambda:image())  
 button_renderAnimation = ttk.Button(window,text = "Render Animation", width=buttonwidth, command = lambda:anim())  
-button_exit = ttk.Button(window,text = "Exit",command = exit) 
+button_exit = ttk.Button(window,text = "Exit", command = exit) 
 
 #Layout
 window.grid_columnconfigure(0, weight=1)
@@ -101,12 +96,16 @@ window.grid_rowconfigure(10, minsize=50)
 button_exit.grid(column = 0, row = 11)
 window.grid_rowconfigure(11, minsize=50)
 
-if sv_ttk:
-    sv_ttk.set_theme("dark")
-else:
-    print("sv_ttk package not installed!")
-    style = ttk.Style(window)
-    style.theme_use('classic')
+style = ttk.Style(window)
+style.theme_use('clam')
+style.configure("TButton", font=("Terminal", 12), padding=6)
+style.configure("TLabel", font=("Terminal", 12), padding=6, background = "#1c0036", foreground="white")
+style.map(
+    "TButton",
+    background=[("active", "#1c0036"), ("!active", "#0b0014")],
+    foreground=[("active", "#FFFFA0"), ("!active", "#E0E0E0")],
+)
+
 center_window(window)
 
 window.mainloop()
