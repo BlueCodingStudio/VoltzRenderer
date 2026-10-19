@@ -1,7 +1,7 @@
 import subprocess
 
-def renderimage(blender, filename, frame, output):
-    cmd = [blender, ' -b ', filename, '-F PNG -o ', output, ' -f ', frame]
+def renderimage(blender, filename, frame, output, renderdevice):
+    cmd = [blender, ' -b ', filename, '-F PNG -o ', output, ' -f ', frame,' -- --cycles-device ', renderdevice]
     res = ' '.join(cmd)
     print(res)
     subprocess.run(res)
