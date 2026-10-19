@@ -17,5 +17,4 @@ _Doesn't Have_
 -Rendering Specific Scene inside of .blend File, <br>
 -Rendering a list of blender files. <br>
 
-_If you are having problems with path directories, please delete settings.json and restart Voltz.py
-(This creates a new empty settings.json)_
+(_If you are having problems with path directories, please delete settings.json and restart Voltz.py, then make sure to select the correct directories_)
