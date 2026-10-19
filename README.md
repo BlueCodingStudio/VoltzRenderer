@@ -3,18 +3,18 @@
 
 _Does Have_
 
-Saving of Directory of Blender Location and Output Folder, 
-Rendering for Image and Animation, 
-Rendering to Specific Output Folder, 
-Rendering at Specific frame,
-And Cool Gui!!
+-Saving of Directory of Blender Location and Output Folder, <br>
+-Rendering for Image and Animation, <br>
+-Rendering to Specific Output Folder, <br>
+-Rendering at Specific frame, <br>
+-And Cool Gui!! <br>
 
 _Doesn't Have_
 
-Changing of Render Engine, 
-Changing of CPU/GPU Devices, 
-Rendering Specific Scene inside of .blend File,
-Rendering a list of blender files.
+-Changing of Render Engine, <br>
+-Changing of CPU/GPU Devices, <br>
+-Rendering Specific Scene inside of .blend File, <br>
+-Rendering a list of blender files. <br>
 
 _If you are having problems with path directories, please delete settings.json and restart Voltz.py
 (This creates a new empty settings.json)_
