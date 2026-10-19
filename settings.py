@@ -3,7 +3,7 @@ import os
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SETTINGS = os.path.join(SCRIPT_DIR, "settings.json")
-OUTPUT = os.path.join(SCRIPT_DIR, "/output")
+OUTPUT = SCRIPT_DIR + "\output"
 
 def load():
     global data
