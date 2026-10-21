@@ -1,20 +1,17 @@
 #  <img src="images/Title.png" height="100px">
-**GUI-less Rendering for Blender**, 0.22 Alpha Release.
+**GUI-less Rendering for Blender, Third Alpha Release of Voltz Renderer.**
 <br><img src="images/Screenshot 1.png" height="200px">
 
-_Does Have_
+_Does Have_<br>
+- Easy to Use UI<br>
+- Rendering for Image and Animation<br>
+- Rendering to Specific Output Folder<br>
+- Rendering at Specific frame<br>
+- Rendering a List of blender files.<br>
+- Changing of CPU/GPU Devices<br>
 
--Saving of Directory of Blender Location and Output Folder, <br>
--Rendering for Image and Animation, <br>
--Rendering to Specific Output Folder, <br>
--Rendering at Specific frame, <br>
--Changing of CPU/GPU Devices, <br>
--And Cool Gui!! <br>
-
-_Doesn't Have_
-
--Changing of Render Engine, <br>
--Rendering Specific Scene inside of .blend File, <br>
--Rendering a list of blender files. <br>
+_Doesn't Have_<br>
+- ~Changing of Render Engine~ (Will no longer be implemented)<br>
+- Rendering Specific Scene/All Scenes inside of .blend File<br>
 
 (_If you are having problems with path directories, please delete settings.json and restart Voltz.py, then make sure to select the correct directories_)
