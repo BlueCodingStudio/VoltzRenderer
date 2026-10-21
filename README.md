@@ -1,6 +1,6 @@
 #  <img src="images/Title.png" height="100px">
 **GUI-less Rendering for Blender, Third Alpha Release of Voltz Renderer.**
-<br><img src="images/Screenshot 1.png" height="300px">
+<br><img src="images/Screenshot.png" height="300px">
 
 _Does Have_<br>
 - Easy to Use UI<br>
