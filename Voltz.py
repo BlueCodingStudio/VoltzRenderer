@@ -92,13 +92,13 @@ def center_window(window):
     window.geometry(f"{width}x{height}+{x}+{y}")
 
 buttonwidth = 35
-label_file_explorer = Label(window, text = "Voltz Renderer v.0.3a", fg = "#ff006a", bg = "#0b0014", font=("System", 36))
+label_file_explorer = Label(window, text = "Voltz Renderer v.beta-1", fg = "#ff006a", bg = "#0b0014", font=("System", 36))
 
 button_blender = ttk.Button(window,text = "Select Blender Executable", width=buttonwidth, command = browseExec)
 label_blender =  ttk.Label(window,text = "ERROR")
 
 button_explore = ttk.Button(window,text = "Select Blender File", width=buttonwidth, command = browseFile)
-text_explore =  Text(window, font=("System", 12), background = "#0b0014", foreground="white", width=50)
+text_explore =  Text(window, font=("System", 12), background="#0b0014", foreground="#E0E0E0", insertbackground="#E0E0E0", selectbackground="#ff006a", selectforeground="#1c0036")
 text_explore.insert('1.0', "No Blender File Selected")
 text_explore.config(state="disabled")
 
@@ -115,7 +115,7 @@ cycles_dropdown["menu"].config(bg="#0b0014", fg="#E0E0E0", font=("System"), acti
 
 
 label_frames =  ttk.Label(window,text = "Frame:")
-text_frames = Text(window, height = 1, width = 25, font=("System", 17), background="#0b0014", foreground="#E0E0E0", insertbackground="white", selectbackground="#ff006a", selectforeground="#1c0036")
+text_frames = Text(window, height = 1, width = 25, font=("System", 17), background="#0b0014", foreground="#E0E0E0", insertbackground="#E0E0E0", selectbackground="#ff006a", selectforeground="#1c0036")
 text_frames.insert(END, "0001")
 
 button_renderImage = ttk.Button(window,text = "Render Image", width=buttonwidth, command = lambda:image())  
@@ -123,15 +123,14 @@ button_renderAnimation = ttk.Button(window,text = "Render Animation", width=butt
 button_exit = ttk.Button(window,text = "Exit", command = exit) 
 
 #Layout
-
 label_file_explorer.place(relx=0.5, y=72, width=1280, height=36*4, anchor='center')
 
 button_blender.place(relx=0.25, y=200, anchor='center')
-label_blender.place(relx=0.5, y=182.5)
-label_output.place(relx=0.5, y=233)
+label_blender.place(relx=0.5, y=182.5, width=545)
+label_output.place(relx=0.5, y=233, width=545)
 button_output.place(relx=0.25, y=250, anchor='center')
 button_explore.place(relx=0.25, y=300, anchor='center')
-text_explore.place(relx=0.5, y=285, height=180)
+text_explore.place(relx=0.506, y=285, height=180, width=525)
 
 
 label_cycles.place(relx=0.15, y=350, anchor='center')
@@ -147,7 +146,7 @@ update_Labels()
 style = ttk.Style(window)
 style.theme_use('clam')
 style.configure("TButton", font=("Terminal", 12), padding=6)
-style.configure("TLabel", font=("Terminal", 12), padding=6, background = "#1c0036", foreground="white")
+style.configure("TLabel", font=("Terminal", 12), padding=6, background = "#1c0036", foreground="#E0E0E0")
 
 style.map(
     "TButton",
